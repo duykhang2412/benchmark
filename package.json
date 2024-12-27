@@ -1,0 +1,18 @@
+{
+  "name": "benchmark-example-hono",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "hello": "pnpm --filter @app/hello",
+    "common": "pnpm --filter @packages/common",
+    "mongodb-connector": "pnpm --filter @packages/mongodb-connector",
+    "redis-connector": "pnpm --filter @packages/redis-connector",
+    "benchmark-example-hono": "pnpm --filter @apps/benchmark-example-hono",
+    "dev:benchmark-example-hono": "pnpm run benchmark-example-hono dev",
+    "packages:build": "pnpm run common build && pnpm run mongodb-connector build && pnpm run redis-connector build && pnpm run benchmark-example-hono build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

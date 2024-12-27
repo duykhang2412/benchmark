@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "module": "CommonJS",
+    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "strict": true,
+    "plugins": [
+      {
+        "transform": "typia/lib/transform",
+        "validate": true,
+        "assert": true,
+        "stringify": true
+      }
+    ],
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./dist/**/*"
+  ]
+}

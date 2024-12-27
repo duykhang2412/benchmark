@@ -1,0 +1,23 @@
+{
+  "name": "@packages/redis-connector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@packages/common": "workspace:*",
+    "ioredis": "^5.4.1",
+    "mongodb": "^6.5.0"
+  },
+  "devDependencies": {
+    "@packages/eslint-config-nodejs": "workspace:*",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.4"
+  }
+}
