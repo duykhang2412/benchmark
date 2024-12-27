@@ -1,5 +1,6 @@
 import { createUser, getUser, updateUser } from "../store/repositories";
 import { validateUserDto } from "../dto";
+import { log } from "@grpc/grpc-js/build/src/logging";
 
 export const UserController = {
 
@@ -50,7 +51,6 @@ export const UserController = {
                 });
                 return;
             }
-
             callback(null, {
                 ok: true,
                 data: result,

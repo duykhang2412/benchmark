@@ -2,8 +2,6 @@ import { logger } from "@packages/common";
 import { UserEntity } from "../entities/user.entity";
 import { UserCollection } from "../models/user.model";
 
-
-
 export async function createUser(
     userId: string,
     userName: string,

@@ -27,6 +27,8 @@ message CreateUserRequest {
 }
 message CreateUserResponse {
   bool ok = 1;
+  BenchmarkHonoUser data = 2;
+
 }
 message UpdateUserRequest {
   BenchmarkHonoUser data = 1;

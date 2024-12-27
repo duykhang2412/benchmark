@@ -3,7 +3,7 @@ import * as grpc from "@grpc/grpc-js";
 import * as protoLoader from "@grpc/proto-loader";
 import { UserEntity } from "../store/entities";
 import { serve } from '@hono/node-server'
-import { HTTP_PORT } from '../constraint';
+import { GRPC_PORT, HTTP_PORT } from '../constraint';
 import { cwd } from "process";
 import { UserInterface, validateUserDto } from "../dto";
 
@@ -20,7 +20,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const userProto = grpc.loadPackageDefinition(packageDefinition).user as any;
 
 const grpcClient = new userProto.UserServiceInternal(
-    `0.0.0.0:${HTTP_PORT}`,
+    `0.0.0.0:${GRPC_PORT}`,
     grpc.credentials.createInsecure()
 );
 
@@ -52,14 +52,19 @@ app.post("/user", async (c) => {
             return c.json({ message: 'Invalid data', errors: isValid.errors }, 400);
         }
         const userinfo: UserInterface = body;
-        // console.log('userinfo:', userinfo);s
-        // console.log('userinfo:', (userinfo.userId));
-
         if (!userinfo.userId || !userinfo.userName) {
-
             return c.json({ message: "Invalid user data: userId and userName are required" }, 400);
         }
+        const existingUser = await new Promise<any>((resolve, reject) => {
+            grpcClient.GetUser({ data: { userId: userinfo.userId, userName: userinfo.userName } }, (err: any, res: any) => {
+                if (err) return reject(err);
+                return resolve(res);
+            });
+        });
 
+        if (existingUser && existingUser.ok && (existingUser.data.userId === userinfo.userId || existingUser.data.userName === userinfo.userName)) {
+            return c.json({ message: "User ID or User Name already exists" }, 400);
+        }
         const result = await new Promise<any>((resolve, reject) => {
             grpcClient.CreateUser(
                 { data: { userId: userinfo.userId, userName: userinfo.userName } },
@@ -80,6 +85,7 @@ app.post("/user", async (c) => {
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
+
 
 app.put("/user", async (c) => {
     try {
