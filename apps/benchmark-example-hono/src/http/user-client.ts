@@ -74,7 +74,6 @@ app.post("/user", async (c) => {
                 }
             );
         });
-
         if (result.ok == false) {
             return c.json({ message: "Create Failed", error: result.error }, 400);
         }
@@ -86,7 +85,6 @@ app.post("/user", async (c) => {
     }
 });
 
-
 app.put("/user", async (c) => {
     try {
         const body = await c.req.json();
@@ -95,8 +93,6 @@ app.put("/user", async (c) => {
             return c.json({ message: 'Invalid data', errors: isValid.errors }, 400);
         }
         const updateinfo: UserInterface = body;
-        // console.log('userinfo:', updateinfo);
-        // console.log('userinfo:', (updateinfo.userName));
         const result = await new Promise<any>((resolve, reject) => {
             grpcClient.Update(
                 { data: { userId: updateinfo.userId, userName: updateinfo.userName } },
@@ -106,7 +102,6 @@ app.put("/user", async (c) => {
                 }
             );
         });
-        console.log('Result:', result);
 
         if (result.ok == false) {
             return c.json({ message: "Update Failed" }, 400)
@@ -117,7 +112,6 @@ app.put("/user", async (c) => {
         return c.json({ error: "Internal Server Error" }, 500);
     }
 })
-
 
 console.log(`Server is running on http://localhost:${HTTP_PORT}`)
 serve({

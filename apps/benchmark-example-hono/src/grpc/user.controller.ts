@@ -1,6 +1,5 @@
 import { createUser, getUser, updateUser } from "../store/repositories";
 import { validateUserDto } from "../dto";
-import { log } from "@grpc/grpc-js/build/src/logging";
 
 export const UserController = {
 
@@ -76,9 +75,7 @@ export const UserController = {
                 });
                 return;
             }
-            console.log('Valid userdata:', userdata);
             const result = await updateUser(userdata.userId as string, userdata.userName as string);
-            console.log('Result:', result);
 
             if (result instanceof Error) {
                 callback(null, {
